@@ -4,6 +4,7 @@ require('dotenv').config();
 const API_KEY = process.env.API_KEY;
 const form = document.getElementById('currencyForm');
 const results = document.getElementById('result');
+const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -16,7 +17,7 @@ form.addEventListener('submit', (e) => {
 async function convertCurrency(amount, currency) {
   try {
     const response = await fetch(
-      `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
+      `${corsProxyUrl}https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
     );
     const data = await response.json();
 
