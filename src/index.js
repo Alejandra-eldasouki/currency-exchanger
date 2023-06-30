@@ -5,6 +5,14 @@ const API_KEY = process.env.API_KEY;
 const form = document.getElementById('currencyForm');
 const results = document.getElementById('result');
 
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const amount = document.getElementById('amount').value;
+  const currency = document.getElementById('currency').value;
+  convertCurrency(amount, currency);
+});
+
 async function convertCurrency(amount, currency) {
   try {
     const response = await fetch(
