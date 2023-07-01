@@ -1,42 +1,44 @@
 import './css/styles.css';
 require('dotenv').config();
 
-// const API_KEY = process.env.API_KEY;
+const API_KEY = 'ebd3d8658766aa1602f1723a';
+const API_URL = 'https://v6.exchangeratesapi.io/latest';
 const form = document.getElementById('currencyForm');
 const results = document.getElementById('result');
+const amountDiv = document.getElementById('amount').value;
+const currencySlc = document.getElementById('currency').value;
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const amount = document.getElementById('amount').value;
-  const currency = document.getElementById('currency').value;
-  convertCurrency(amount, currency);
+  const amount = amountDiv.value;
+  const currency = currencySlc.value;
+
+  fetch(`${API_URL}?base=USD&access_key=${API_KEY}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        showError(data.error);
+      } else {
+        if (currency in data.rates) {
+          const rate = data.rates[currency];
+          const convertedAmount = amount * rate;
+          showResult(convertedAmount, currency);
+        } else {
+          showError(`Currency ${currency} is not available.`);
+        }
+      }
+    })
+    .catch((error) => {
+      showError('An error has ocurred while fetching the rates.');
+      console.log(error);
+    });
 });
 
-async function convertCurrency(amount, currency) {
-  console.log(process.env.API_KEY);
-  try {
-    const response = await fetch(
-      `https://v6.exchangerate-api.com/v6/${process.env.API_KEY}/latest/USD`
-    );
-    const data = await response.json();
+function showResult(amount, currency) {
+  results.textContent = `${amount.toFixed(2)} ${currency}`;
+}
 
-    if (response.ok) {
-      const rate = data.coversion_rates[currency];
-
-      if (rate) {
-        const convertedAmount = amount * rate;
-        results.textContent = `${amount} USD = ${convertedAmount.toFixed(
-          2
-        )} ${currency}`;
-      } else {
-        results.textContent = `Currency "${currency}" not found.`;
-      }
-    } else {
-      results.textContent = `Error: ${data.error_type}. ${data.error_message}`;
-    }
-  } catch (error) {
-    results.textContent = 'An error ocurred while fetching the rates';
-    console.error(error);
-  }
+function showError(message) {
+  results.textContent = `Error: ${message}`;
 }
