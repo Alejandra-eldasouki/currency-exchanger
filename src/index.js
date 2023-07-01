@@ -1,7 +1,7 @@
 import './css/styles.css';
 require('dotenv').config();
 
-const API_KEY = process.env.API_KEY;
+// const API_KEY = process.env.API_KEY;
 const form = document.getElementById('currencyForm');
 const results = document.getElementById('result');
 
@@ -14,9 +14,10 @@ form.addEventListener('submit', (e) => {
 });
 
 async function convertCurrency(amount, currency) {
+  console.log(process.env.API_KEY);
   try {
     const response = await fetch(
-      `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/USD`
+      `https://v6.exchangerate-api.com/v6/${process.env.API_KEY}/latest/USD`
     );
     const data = await response.json();
 
