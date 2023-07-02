@@ -6,13 +6,13 @@ Currency Exchanger is a web application that allows users to convert U.S. dollar
 
 ### SetUp and Installation
 
-> Visit the following link: https://github.com/Alejandra-eldasouki/currency-exchanger
-> Clone the repository to your desired directory.
-> Go to https://www.exchangerate-api.com/ and create a free account to get an API key
-> Open currency-exchange directory with VS Code or your preferred code editor
-> create a .env file in the root directory and add API_KEY = {YOUR_API_KEY} to it.
-> run npm install in your console
-> npm run to start the application
+- Visit the following link: https://github.com/Alejandra-eldasouki/currency-exchanger
+- Clone the repository to your desired directory.
+- Go to https://www.exchangerate-api.com/ and create a free account to get an API key
+- Open currency-exchange directory with VS Code or your preferred code editor
+- create a .env file in the root directory and add API_KEY = {YOUR_API_KEY} to it.
+- run npm install in your console
+- npm run to start the application
 
 ### Technologies used
 
