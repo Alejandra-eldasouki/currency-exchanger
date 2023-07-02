@@ -2,6 +2,8 @@
 
 ### Description
 
+Currency Exchanger is a web application that allows users to convert U.S. dollars to various other currencies. Users can enter an amount in U.S. dollars and select a target currency, and the application will fetch the latest exchange rate from an API to perform the conversion. The converted amount is then displayed to the user.
+
 ### SetUp and Installation
 
 > Visit the following link: https://github.com/Alejandra-eldasouki/currency-exchanger
