@@ -38,6 +38,7 @@ form.addEventListener('submit', (e) => {
     })
     .catch((error) => {
       showError('An error occurred while fetching the exchange rates.');
+      // eslint-disable-next-line no-console
       console.log(error);
     });
 });
