@@ -2,20 +2,19 @@ import './css/styles.css';
 require('dotenv').config();
 
 const form = document.getElementById('currencyForm');
-const results = document.getElementById('result');
-const amountDiv = document.getElementById('amount').value;
-const currencySlc = document.getElementById('currency').value;
+const amountInput = document.getElementById('amount');
+const currencySelect = document.getElementById('currency');
+const resultDiv = document.getElementById('result');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
-  const amount = amountDiv.value;
-  const currency = currencySlc.value;
-  const API_KEY = 'ebd3d8658766aa1602f1723a';
-  const API_URL =
-    'https://v6.exchangerate-api.com/v6/ebd3d8658766aa1602f1723a/latest/USD';
+  const amount = amountInput.value;
+  const currency = currencySelect.value;
 
-  // Fetch exchange rates
+  const API_KEY = 'YOUR_API_KEY';
+  const API_URL = `https://api.exchangerate-api.com/v4/latest/USD`;
+
   fetch(`${API_URL}?api_key=${API_KEY}`)
     .then((response) => {
       if (!response.ok) {
@@ -28,7 +27,7 @@ form.addEventListener('submit', (e) => {
         showError(data['error-type']);
       } else {
         const rates = data.rates;
-        if (currency in rates) {
+        if (rates && currency in rates) {
           const rate = rates[currency];
           const convertedAmount = amount * rate;
           showResult(convertedAmount, currency);
@@ -44,9 +43,9 @@ form.addEventListener('submit', (e) => {
 });
 
 function showResult(amount, currency) {
-  results.textContent = `${amount.toFixed(2)} ${currency}`;
+  resultDiv.textContent = `${amount.toFixed(2)} ${currency}`;
 }
 
 function showError(message) {
-  results.textContent = `Error: ${message}`;
+  resultDiv.textContent = `Error: ${message}`;
 }
