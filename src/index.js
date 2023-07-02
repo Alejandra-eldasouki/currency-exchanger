@@ -1,8 +1,6 @@
 import './css/styles.css';
 require('dotenv').config();
 
-const API_KEY = 'ebd3d8658766aa1602f1723a';
-const API_URL = 'https://v6.exchangeratesapi.io/latest';
 const form = document.getElementById('currencyForm');
 const results = document.getElementById('result');
 const amountDiv = document.getElementById('amount').value;
@@ -13,24 +11,34 @@ form.addEventListener('submit', (e) => {
 
   const amount = amountDiv.value;
   const currency = currencySlc.value;
+  const API_KEY = 'ebd3d8658766aa1602f1723a';
+  const API_URL =
+    'https://v6.exchangerate-api.com/v6/ebd3d8658766aa1602f1723a/latest/USD';
 
-  fetch(`${API_URL}?base=USD&access_key=${API_KEY}`)
-    .then((response) => response.json())
+  // Fetch exchange rates
+  fetch(`${API_URL}?api_key=${API_KEY}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch exchange rates.');
+      }
+      return response.json();
+    })
     .then((data) => {
-      if (data.error) {
-        showError(data.error);
+      if (data.result === 'error') {
+        showError(data['error-type']);
       } else {
-        if (currency in data.rates) {
-          const rate = data.rates[currency];
+        const rates = data.rates;
+        if (currency in rates) {
+          const rate = rates[currency];
           const convertedAmount = amount * rate;
           showResult(convertedAmount, currency);
         } else {
-          showError(`Currency ${currency} is not available.`);
+          showError(`Currency ${currency} does not exist.`);
         }
       }
     })
     .catch((error) => {
-      showError('An error has ocurred while fetching the rates.');
+      showError('An error occurred while fetching the exchange rates.');
       console.log(error);
     });
 });
