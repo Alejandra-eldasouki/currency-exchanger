@@ -1,5 +1,5 @@
 import './css/styles.css';
-require('dotenv').config();
+// require('dotenv').config();
 
 const form = document.getElementById('currencyForm');
 const amountInput = document.getElementById('amount');
